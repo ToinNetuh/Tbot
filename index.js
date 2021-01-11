@@ -135,7 +135,7 @@ async function starts() {
 			const isCmd = body.startsWith(prefix)
 
 			mess = {
-				wait: '⌛ Sedang di Prosess ⌛',
+				wait: '⌛ Calmaer opohar to fazendo ⌛',
 				success: '✔️ Berhasil ✔️',
 				error: {
 					stick: '[❗] Gagal, terjadi kesalahan saat mengkonversi gambar ke sticker ❌',
@@ -614,7 +614,17 @@ async function starts() {
 						n = JSON.parse(JSON.stringify(data));
 						nimek =  n[Math.floor(Math.random() * n.length)];
 						pok = await getBuffer(nimek)
-						client.sendMessage(from, pok, image, { quoted: mek, caption: `𝐏𝐈𝐍𝐓𝐄𝐑𝐄𝐒𝐓\n\*Hasil Pencarian* : *${body.slice(11)}*`})
+						client.sendMessage(from, pok, image, { quoted: mek, caption: `Era sapoha q tu qria?\n\*Soq tae* : *${body.slice(11)}*`})
+						break
+				case 'walpaper':
+                    client.updatePresence(from, Presence.composing) 
+					data = await fetchJson(`https://api.fdci.se/rep.php?gambar=wallpaper`, {method: 'get'})
+                                        /*if (!isDaftar) return reply(mess.only.daftarB)*/
+					reply(mess.wait)
+					n = JSON.parse(JSON.stringify(data));
+					nimek =  n[Math.floor(Math.random() * n.length)];
+					pok = await getBuffer(nimek)
+					client.sendMessage(from, pok, image, { quoted: mek })
 					break
 				case 'setprefix':
 					client.updatePresence(from, Presence.composing) 
@@ -657,6 +667,47 @@ async function starts() {
 						teks += `╠➥ @${mem.jid.split('@')[0]}\n`
 						members_id.push(mem.jid)
 					}
+					if (text.includes('.Cecan')){
+						conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil',MessageType.text, { quoted: m } );
+						}
+						   if (text.includes("random"))
+						   {
+							var items = ["ullzang girl", "cewe cantik", "cewe hijab", "remaja cantik", "cewek jepang"];
+							var cewe = items[Math.floor(Math.random() * items.length)];
+							var url = "https://api.fdci.se/rep.php?gambar=" + cewe;
+							
+							axios.get(url)
+							  .then((result) => {
+								var b = JSON.parse(JSON.stringify(result.data));
+								var cewek =  b[Math.floor(Math.random() * b.length)];
+								imageToBase64(cewek) // Path to the image
+								.then(
+									(response) => {
+							conn.sendMessage(id, 'Jaja eu mando sabosta espera', MessageType.text, { quoted: m } )
+							var buf = Buffer.from(response, 'base64'); // Ta-da	
+							conn.sendMessage(id, buf ,MessageType.image, { caption: `nih gan`, quoted: m } )
+							   
+									}
+								)
+								.catch(
+									(error) => {
+										console.log(error); // Logs an error if there was one
+									}
+								)
+							
+							});
+							}
+							if (text.includes('Bot')){
+								conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .bot apa kabar_',MessageType.text, { quoted: m } );
+								}
+								if (text.includes(".bot")){
+								const teks = text.replace(/.bot /, "")
+								axios.get(`https://st4rz.herokuapp.com/api/simsimi?kata=${teks}`).then((res) => {
+									let hasil = `${res.data.result}\n\n*Simsimi chat*`;
+									conn.sendMessage(id, hasil ,MessageType.text, {quoted: m});
+								})
+								}
+						
 					mentions('╔══✪〘 Mention All 〙✪══\n╠➥'+teks+'╚═〘 - - - - 〙', members_id, true)
 					break
                 case 'tagall2':
@@ -1287,7 +1338,7 @@ async function starts() {
 							reply(err)
 						})
 					} else {
-						reply('Foto aja mas')
+						reply('Oiin mi mama senor?')
 					}
 					break
 				default:
