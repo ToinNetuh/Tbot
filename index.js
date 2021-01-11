@@ -425,6 +425,13 @@ async function starts() {
 					buffer = await getBuffer(anu.result)
 					client.sendMessage(from, buffer, image, {quoted: mek})
 					break
+					case 'yuugo':
+					anu = await fetchJson(`https://api.vhtear.com/pinterest?query=yuugoneverland&apikey=ANTIGRATISNIHANJENKKK`, {method: 'get'})
+					var eln = JSON.parse(JSON.stringify(anu.result));
+					var elnn =  eln[Math.floor(Math.random() * eln.length)];
+					nye = await getBuffer(elnn)
+					client.sendMessage(from, nye, image, { caption: 'elang!!', quoted: mek })
+					break
 
 				case 'artinama':
                   client.updatePresence(from, Presence.composing) 
