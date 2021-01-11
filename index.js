@@ -264,10 +264,10 @@ async function starts() {
 						client.groupMakeAdmin(from, mentioned)
 					}
 					break
-					case 'randomhentai':
+					case 'randomhentaio':
 						try {
-							if (!isNsfw) return reply('❌ *FALSE* ❌')
-							res = await fetchJson(`https://tobz-api.herokuapp.com/api/hentai`, {method: 'get'})
+							if (!isNsfw) return reply('❌ *NSFW Desativado* ❌')
+							res = await fetchJson(`https://tobz-api.herokuapp.com/api/hentai?apikey=BotWeA`, {method: 'get'})
 							buffer = await getBuffer(res.result)
 							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'hentai teros'})
 						} catch (e) {
@@ -374,16 +374,16 @@ async function starts() {
 			    case 'nsfw':
 					if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.admin)
-					if (args.length < 1) return reply('Hmmmm')
+					if (args.length < 1) return reply('Hmmmm 1 para ativar 2 para desativar')
 					if (Number(args[0]) === 1) {
-						if (isNsfw) return reply('Mode nsfw sudah aktif')
+						if (isNsfw) return reply('NSFW ja esta ativado')
 						nsfw.push(from)
 						fs.writeFileSync('./src/nsfw.json', JSON.stringify(nsfw))
-						reply('Sukses mengaktifkan mode nsfw di group ini ✔️')
+						reply('NSFW Ativado ✔️')
 					} else if (Number(args[0]) === 0) {
 						nsfw.splice(from, 1)
 						fs.writeFileSync('./src/nsfw.json', JSON.stringify(nsfw))
-						reply('Sukes menonaktifkan mode nsfw di group ini ✔️')
+						reply('NSFW Desativado ✔️')
 					} else {
 						reply('1 para ativar 2 para desativar')
 					}
