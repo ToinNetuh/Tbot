@@ -1,4 +1,5 @@
 const toinmenu = (prefix, pushname) => {
+  return
 
 
     `Ola senor resumindo aqui e o menu NSFW
