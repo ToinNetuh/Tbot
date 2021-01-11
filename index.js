@@ -704,6 +704,16 @@ async function starts() {
 					nimek =  n[Math.floor(Math.random() * n.length)];
 					pok = await getBuffer(nimek)
 					client.sendMessage(from, pok, image, { quoted: mek })
+					break 
+				case 'twit':
+                    client.updatePresence(from, Presence.composing) 
+					data = await fetchJson(`https://api.fdci.se/rep.php?gambar=`, {method: 'get'})
+                                        /*if (!isDaftar) return reply(mess.only.daftarB)*/
+					reply(mess.wait)
+					n = JSON.parse(JSON.stringify(data));
+					nimek =  n[Math.floor(Math.random() * n.length)];
+					pok = await getBuffer(nimek)
+					client.sendMessage(from, pok, image, { quoted: mek, caption: `Seu post random do tt`})
 					break
 				case 'setprefix':
 					client.updatePresence(from, Presence.composing) 
