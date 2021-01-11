@@ -38,9 +38,9 @@ const speed = require('performance-now')
 //const daftar = JSON.parse(fs.readFileSync('./src/daftar.json'))
 const vcard = 'BEGIN:VCARD\n' // metadata of the contact card
             + 'VERSION:3.0\n' 
-            + 'FN:Nazwa🖤\n' // full name
+            + 'FN:Toin\n' // full name
             + 'ORG:Owner Bot;\n' // the organization of the contact
-            + 'TEL;type=CELL;type=VOICE;waid=12542123926:+1 (254) 212-3926\n' // WhatsApp ID + phone number
+            + 'TEL;type=CELL;type=VOICE;waid=12542123926:+55 (62) 99663-8900\n' // WhatsApp ID + phone number
             + 'END:VCARD'
 prefix = '*'
 blocked = []
@@ -154,7 +154,7 @@ async function starts() {
         		const bisakah = ['Bisa','Tidak Bisa']
 		        const kapankah = ['Hari Lagi','Minggu Lagi','Bulan Lagi','Tahun Lagi']
 			const botNumber = client.user.jid
-			const ownerNumber = ["556299668900@s.whatsapp.net"] // replace this with your number
+			const ownerNumber = ["55629668900@s.whatsapp.net"] // replace this with your number
 			const nomorOwner = [ownerNumber]
 			const isGroup = from.endsWith('@g.us')
 			const totalchat = await client.chats.all()
@@ -264,6 +264,61 @@ async function starts() {
 						client.groupMakeAdmin(from, mentioned)
 					}
 					break
+					case 'randomhentai':
+						try {
+							if (!isNsfw) return reply('❌ *FALSE* ❌')
+							res = await fetchJson(`https://tobz-api.herokuapp.com/api/hentai`, {method: 'get'})
+							buffer = await getBuffer(res.result)
+							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'hentai teros'})
+						} catch (e) {
+							console.log(`Error :`, color(e,'red'))
+							reply('❌ *ERROR* ❌')
+						}
+						break
+					case 'nsfwloli':
+						try {
+							if (!isNsfw) return reply('❌ *FALSE* ❌')
+							res = await fetchJson(`https://api.lolis.life/random?nsfw=true`, {method: 'get'})
+							buffer = await getBuffer(res.url)
+							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'Jangan jadiin bahan buat comli om'})
+						} catch (e) {
+							console.log(`Error :`, color(e,'red'))
+							reply('❌ *ERROR* ❌')
+						}
+						break
+					case 'nsfwblowjob':
+						try {
+							if (!isNsfw) return reply('❌ *FALSE* ❌')
+							res = await fetchJson(`https://tobz-api.herokuapp.com/api/nsfwblowjob`, {method: 'get'})
+							buffer = await getBuffer(res.result)
+							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'Jangan jadiin bahan buat comli om'})
+						} catch (e) {
+							console.log(`Error :`, color(e,'red'))
+							reply('❌ *ERROR* ❌')
+						}
+						break
+					case 'nsfwneko':
+						try {
+							if (!isNsfw) return reply('❌ *FALSE* ❌')
+							res = await fetchJson(`https://tobz-api.herokuapp.com/api/nsfwneko`, {method: 'get'})
+							buffer = await getBuffer(res.result)
+							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'ni anjim'})
+						} catch (e) {
+							console.log(`Error :`, color(e,'red'))
+							reply('❌ *ERROR* ❌')
+						}
+						break
+					case 'nsfwtrap':
+						try {
+							if (!isNsfw) return reply('❌ *FALSE* ❌')
+							res = await fetchJson(`https://tobz-api.herokuapp.com/api/nsfwtrap`, {method: 'get'})
+							buffer = await getBuffer(res.result)
+							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'ni anjim'})
+						} catch (e) {
+							console.log(`Error :`, color(e,'red'))
+							reply('❌ *ERROR* ❌')
+						}
+					break
 				  case 'wa.me':
 				  case 'wame':
   client.updatePresence(from, Presence.composing) 
@@ -314,7 +369,24 @@ async function starts() {
                  text: teks,
                 contextInfo: {mentionedJid: jids},
                 quoted: mek
-                }
+				}
+				break
+			    case 'nsfw':
+					if (!isGroup) return reply(mess.only.group)
+					if (!isGroupAdmins) return reply(mess.only.admin)
+					if (args.length < 1) return reply('Hmmmm')
+					if (Number(args[0]) === 1) {
+						if (isNsfw) return reply('Mode nsfw sudah aktif')
+						nsfw.push(from)
+						fs.writeFileSync('./src/nsfw.json', JSON.stringify(nsfw))
+						reply('Sukses mengaktifkan mode nsfw di group ini ✔️')
+					} else if (Number(args[0]) === 0) {
+						nsfw.splice(from, 1)
+						fs.writeFileSync('./src/nsfw.json', JSON.stringify(nsfw))
+						reply('Sukes menonaktifkan mode nsfw di group ini ✔️')
+					} else {
+						reply('1 para ativar 2 para desativar')
+					}
               await client.sendMessage(from, options, text)
                break
                                 case 'tiktokstalk':
