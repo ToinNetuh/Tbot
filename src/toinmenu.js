@@ -1,8 +1,5 @@
 const toinmenu = (prefix, pushname) => {
-  return
-
-
-    `Ola senor resumindo aqui e o menu NSFW
+  return `Ola senor resumindo aqui e o menu NSFW
     ◪ *NSFW*
   │
   ├─ ❏ ${prefix}nsfwbobs
