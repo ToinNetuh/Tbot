@@ -208,7 +208,10 @@ async function starts() {
                break
                case 'kodenegara':
                client.sendMessage(from, negara(prefix, sender), text, {quoted: mek})
-               break
+			   break
+			   case 'toinmenu':
+		client.sendMessage(from, toinmenu(prefix, sender), text, {quoted: mek})
+                break
 				case 'demote':
 					if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.admin)
@@ -699,6 +702,16 @@ async function starts() {
 				case 'images':
 						client.updatePresence(from, Presence.composing) 
 						data = await fetchJson(`https://api.fdci.se/rep.php?gambar=${body.slice(11)}`, {method: 'get'})
+											/*if (!isDaftar) return reply(mess.only.daftarB)*/
+						reply(mess.wait)
+						n = JSON.parse(JSON.stringify(data));
+						nimek =  n[Math.floor(Math.random() * n.length)];
+						pok = await getBuffer(nimek)
+						client.sendMessage(from, pok, image, { quoted: mek, caption: `Era sapoha q tu qria?\n\*Soq tae* : *${body.slice(11)}*`})
+						break
+					case 'animet':
+						client.updatePresence(from, Presence.composing) 
+						data = await fetchJson(`https://arugaz.herokuapp.com/api/kuso?q=${body.slice(11)}`, {method: 'get'})
 											/*if (!isDaftar) return reply(mess.only.daftarB)*/
 						reply(mess.wait)
 						n = JSON.parse(JSON.stringify(data));
