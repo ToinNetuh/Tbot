@@ -228,7 +228,7 @@ async function starts() {
 						client.groupDemoteAdmin(from, mentioned)
 					}
 					break
-                                case 'randomhentai':
+                                case 'toin':
                                         gatauda = body.slice(6)
                                         /*if (!isDaftar) return reply(mess.only.daftarB)*/
                                         reply(mess.wait)
@@ -277,7 +277,7 @@ async function starts() {
 						break
 					case 'nsfwloli':
 						try {
-							if (!isNsfw) return reply('❌ *FALSE* ❌')
+							if (!isNsfw) return reply('❌ *NSFW Desativado* ❌')
 							res = await fetchJson(`https://api.lolis.life/random?nsfw=true`, {method: 'get'})
 							buffer = await getBuffer(res.url)
 							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'Jangan jadiin bahan buat comli om'})
@@ -288,7 +288,7 @@ async function starts() {
 						break
 					case 'nsfwblowjob':
 						try {
-							if (!isNsfw) return reply('❌ *FALSE* ❌')
+							if (!isNsfw) return reply('❌ *NSFW Desativado* ❌')
 							res = await fetchJson(`https://tobz-api.herokuapp.com/api/nsfwblowjob`, {method: 'get'})
 							buffer = await getBuffer(res.result)
 							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'Jangan jadiin bahan buat comli om'})
@@ -299,8 +299,8 @@ async function starts() {
 						break
 					case 'nsfwneko':
 						try {
-							if (!isNsfw) return reply('❌ *FALSE* ❌')
-							res = await fetchJson(`https://tobz-api.herokuapp.com/api/nsfwneko`, {method: 'get'})
+							if (!isNsfw) return reply('❌ *NSFW Desativado* ❌')
+							res = await fetchJson(`https://api.computerfreaker.cf/v1/neko`, {method: 'get'})
 							buffer = await getBuffer(res.result)
 							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'ni anjim'})
 						} catch (e) {
@@ -310,8 +310,8 @@ async function starts() {
 						break
 					case 'nsfwtrap':
 						try {
-							if (!isNsfw) return reply('❌ *FALSE* ❌')
-							res = await fetchJson(`https://tobz-api.herokuapp.com/api/nsfwtrap`, {method: 'get'})
+							if (!isNsfw) return reply('❌ *NSFW Desativado* ❌')
+							res = await fetchJson(`https://api.computerfreaker.cf/v1/trap`, {method: 'get'})
 							buffer = await getBuffer(res.result)
 							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'ni anjim'})
 						} catch (e) {
