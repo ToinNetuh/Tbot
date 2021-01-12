@@ -1,7 +1,10 @@
-const help = (prefix, sender, pushname, botname, oname) => {
+const { 
+  prefix
+}
+const help = (pushname, botname, oname) => {
 	return `
 「 *Toin Bot* 」
-Oiin *@${sender.split("@s.whatsapp.net")[0]}
+Oiin ${pushname}
 
 ◪ *INFORMAÇÕES*
   ❏ Prefix: 「  ${prefix}  」
