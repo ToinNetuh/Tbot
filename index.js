@@ -155,7 +155,7 @@ async function starts() {
         		const bisakah = ['Bisa','Tidak Bisa']
 		        const kapankah = ['Hari Lagi','Minggu Lagi','Bulan Lagi','Tahun Lagi']
 			const botNumber = client.user.jid
-			const ownerNumber = ["55629668900@s.whatsapp.net"] // replace this with your number
+			const ownerNumber = ["556296638900@s.whatsapp.net"] // replace this with your number
 			const nomorOwner = [ownerNumber]
 			const isGroup = from.endsWith('@g.us')
 			const totalchat = await client.chats.all()
@@ -389,7 +389,7 @@ async function starts() {
 			    case 'nsfw':
 					if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.admin)
-					if (args.length < 1) return reply('Hmmmm 1 para ativar 2 para desativar')
+					if (args.length < 1) return reply('Hmmmm 1 para ativar 0 para desativar')
 					if (Number(args[0]) === 1) {
 						if (isNsfw) return reply('NSFW ja esta ativado')
 						nsfw.push(from)
@@ -720,6 +720,20 @@ async function starts() {
 						pok = await getBuffer(nimek)
 						client.sendMessage(from, pok, image, { quoted: mek, caption: `Era sapoha q tu qria?\n\*Soq tae* : *${body.slice(11)}*`})
 						break
+				    case 'randomanime':
+					gatauda = body.slice(13)
+					reply(mess.wait)
+					anu = await fetchJson(`https://tobz-api.herokuapp.com/api/randomanime`, {method: 'get'})
+					buffer = await getBuffer(anu.result)
+					client.sendMessage(from, buffer, image, {quoted: mek, caption: `Diria q uma imagem random de Anime`})
+					break
+				case 'waifu':
+					gatauda = body.slice(7)
+					reply(mess.wait)
+					anu = await fetchJson(`https://arugaz.herokuapp.com/api/nekonime`, {method: 'get'})
+					buffer = await getBuffer(anu.result)
+					client.sendMessage(from, buffer, image,{quoted: mek, caption: `Casar com 2d e fodar mais okei`})
+					break
 				case 'walpaper':
                     client.updatePresence(from, Presence.composing) 
 					data = await fetchJson(`https://api.fdci.se/rep.php?gambar=wallpaper`, {method: 'get'})
