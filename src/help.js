@@ -1,7 +1,7 @@
 const help = (prefix, pushname, botname, oname) => {
 	return `
 「 *Toin Bot* 」
-Oiin 
+Oiin ${pushname}
 
 ◪ *INFORMAÇÕES*
   ❏ Prefix: 「  ${prefix}  」
