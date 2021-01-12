@@ -1,10 +1,7 @@
-const { 
-  prefix
-}
-const help = (pushname, botname, oname) => {
+const help = (prefix, pushname, botname, oname) => {
 	return `
 「 *Toin Bot* 」
-Oiin ${pushname}
+Oiin 
 
 ◪ *INFORMAÇÕES*
   ❏ Prefix: 「  ${prefix}  」
@@ -13,9 +10,9 @@ Oiin ${pushname}
   ❏ Grupo do Bot: https://chat.whatsapp.com/CLRNnixaxwM6l73bj3fPke
 
   Outros Menus
-  ${prefix}nsfw
+  ${prefix}nsfwmenu
   ${prefix}menuadmin
-  ${prefix}menutoin
+  ${prefix}toinmenu
 
 ◪ *CRIAR*
   │
@@ -48,24 +45,6 @@ Oiin ${pushname}
   │
   ├─ ❏ ${prefix}meme
   └─ ❏ ${prefix}memeindo
-◪ *GROUP*
-  │
-  ├─ ❏ ${prefix}opengc
-  ├─ ❏ ${prefix}closegc
-  ├─ ❏ ${prefix}promote
-  ├─ ❏ ${prefix}demote
-  ├─ ❏ ${prefix}tagall
-  ├─ ❏ ${prefix}tagall2
-  ├─ ❏ ${prefix}tagall3
-  ├─ ❏ ${prefix}tagall4
-  ├─ ❏ ${prefix}tagall5
-  ├─ ❏ ${prefix}add
-  ├─ ❏ ${prefix}kick
-  ├─ ❏ ${prefix}listadmins
-  ├─ ❏ ${prefix}linkgroup
-  ├─ ❏ ${prefix}leave
-  ├─ ❏ ${prefix}welcome
-  └─ ❏ ${prefix}ownergroup
 ◪ *SOUND*
   │
   ├─ ❏ ${prefix}play
@@ -103,13 +82,6 @@ Oiin ${pushname}
   ├─ ❏ ${prefix}fakta
   ├─ ❏ ${prefix}infocuaca
   └─ ❏ ${prefix}covid
-◪ *OWNER*
-  │
-  ├─ ❏ ${prefix}setprefix
-  ├─ ❏ ${prefix}block
-  ├─ ❏ ${prefix}bc
-  ├─ ❏ ${prefix}bcgc
-  └─ ❏ ${prefix}clearall
 ◪ *OTHER*
   │
   ├─ ❏ ${prefix}send
@@ -119,7 +91,6 @@ Oiin ${pushname}
   ├─ ❏ ${prefix}qrcode
   ├─ ❏ ${prefix}quotes
   └─ ❏ ${prefix}fml
-◪ *OWNER_NAME2*
 `
 }
 

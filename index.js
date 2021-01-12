@@ -16,6 +16,8 @@ const { color, bgcolor } = require('./lib/color')
 const { help } = require('./src/help')
 const { bahasa } = require('./src/bahasa')
 const { toinmenu } = require('./src/toinmenu')
+const { menuadmin } = require('./src/menuadmin')
+const { nsfwmenu } = require('./src/nsfwmenu')
 const { negara } = require('./src/kodenegara')
 const { virtex } = require('./src/virtex')
 const { wait, simih, getBuffer, h2k, generateMessageID, getGroupAdmins, getRandom, banner, start, info, success, close } = require('./lib/functions')
@@ -214,6 +216,12 @@ async function starts() {
 			   break
 			   case 'toinmenu':
 		client.sendMessage(from, toinmenu(prefix, sender), text, {quoted: mek})
+				break
+				case 'menuadmin':
+		client.sendMessage(from, menuadmin(prefix, sender), text, {quoted: mek})
+				break
+				case 'nsfwmenu':
+		client.sendMessage(from, nsfwmenu(prefix, sender), text, {quoted: mek})
                 break
 				case 'demote':
 					if (!isGroup) return reply(mess.only.group)
@@ -329,6 +337,83 @@ async function starts() {
 						try {
 							if (!isNsfw) return reply('❌ *NSFW Desativado* ❌')
 							res = await fetchJson(`https://api.computerfreaker.cf/v1/trap`, {method: 'get'})
+							buffer = await getBuffer(res.result)
+							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'ni anjim'})
+						} catch (e) {
+							console.log(`Error :`, color(e,'red'))
+							reply('❌ *ERROR* ❌')
+						}
+					break
+				case 'nsfwass':
+						try {
+							if (!isNsfw) return reply('❌ *NSFW Desativado* ❌')
+							res = await fetchJson(`https://meme-api.herokuapp.com/gimme/animebooty`, {method: 'get'})
+							buffer = await getBuffer(res.result)
+							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'ni anjim'})
+						} catch (e) {
+							console.log(`Error :`, color(e,'red'))
+							reply('❌ *ERROR* ❌')
+						}
+					break
+				case 'nsfwbelly':
+						try {
+							if (!isNsfw) return reply('❌ *NSFW Desativado* ❌')
+							res = await fetchJson(`https://meme-api.herokuapp.com/gimme/animebellybutton`, {method: 'get'})
+							buffer = await getBuffer(res.result)
+							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'ni anjim'})
+						} catch (e) {
+							console.log(`Error :`, color(e,'red'))
+							reply('❌ *ERROR* ❌')
+						}
+					break
+				case 'nsfwsidebobs':
+						try {
+							if (!isNsfw) return reply('❌ *NSFW Desativado* ❌')
+							res = await fetchJson(`https://meme-api.herokuapp.com/gimme/sideoppai`, {method: 'get'})
+							buffer = await getBuffer(res.result)
+							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'ni anjim'})
+						} catch (e) {
+							console.log(`Error :`, color(e,'red'))
+							reply('❌ *ERROR* ❌')
+						}
+					break
+				case 'nsfwahegao':
+						try {
+							if (!isNsfw) return reply('❌ *NSFW Desativado* ❌')
+							res = await fetchJson(`https://meme-api.herokuapp.com/gimme/ahegao`, {method: 'get'})
+							buffer = await getBuffer(res.result)
+							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'ni anjim'})
+						} catch (e) {
+							console.log(`Error :`, color(e,'red'))
+							reply('❌ *ERROR* ❌')
+						}
+					break
+				case 'nsfwthighs':
+						try {
+							if (!isNsfw) return reply('❌ *NSFW Desativado* ❌')
+							res = await fetchJson(`https://meme-api.herokuapp.com/gimme/animethighss`, {method: 'get'})
+							buffer = await getBuffer(res.result)
+							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'ni anjim'})
+						} catch (e) {
+							console.log(`Error :`, color(e,'red'))
+							reply('❌ *ERROR* ❌')
+						}
+				break
+					case 'nsfwarmpits':
+						try {
+							if (!isNsfw) return reply('❌ *NSFW Desativado* ❌')
+							res = await fetchJson(`https://meme-api.herokuapp.com/gimme/animearmpits`, {method: 'get'})
+							buffer = await getBuffer(res.result)
+							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'ni anjim'})
+						} catch (e) {
+							console.log(`Error :`, color(e,'red'))
+							reply('❌ *ERROR* ❌')
+						}
+					break
+				case 'nsfwfeets':
+						try {
+							if (!isNsfw) return reply('❌ *NSFW Desativado* ❌')
+							res = await fetchJson(`https://meme-api.herokuapp.com/gimme/animefeets`, {method: 'get'})
 							buffer = await getBuffer(res.result)
 							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'ni anjim'})
 						} catch (e) {
