@@ -15,6 +15,7 @@ const {
 const { color, bgcolor } = require('./lib/color')
 const { help } = require('./src/help')
 const { bahasa } = require('./src/bahasa')
+const { toinmenu } = require('./src/toinmenu')
 const { negara } = require('./src/kodenegara')
 const { virtex } = require('./src/virtex')
 const { wait, simih, getBuffer, h2k, generateMessageID, getGroupAdmins, getRandom, banner, start, info, success, close } = require('./lib/functions')
