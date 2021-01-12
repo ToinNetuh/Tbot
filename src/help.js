@@ -1,22 +1,23 @@
-const help = (prefix, botname, oname) => {
+const help = (prefix, pushname, botname, oname) => {
 	return `
 「 *Toin Bot* 」
+Oiin ${pushname}
 
-◪ *INFO*
+◪ *INFORMAÇÕES*
   ❏ Prefix: 「  ${prefix}  」
-  ❏ Creator: OWNER_NAME
-◪ *ABOUT*
-  │
-  ├─ ❏ ${prefix}info
-  ├─ ❏ ${prefix}blocklist
-  ├─ ❏ ${prefix}chatlist
-  └─ ❏ ${prefix}bugreport
-◪ *MAKER*
+  ❏ Criador: Toin
+  ❏ Numero do meu criador: https://wa.me/5562996638900
+  ❏ Grupo do Bot: https://chat.whatsapp.com/CLRNnixaxwM6l73bj3fPke
+
+  Outros Menus
+  ${prefix}nsfw
+  ${prefix}menuadmin
+  ${prefix}menutoin
+
+◪ *CRIAR*
   │
   ├─ ❏ ${prefix}sticker
-  ├─ ❏ ${prefix}stickergif
   ├─ ❏ ${prefix}toimg
-  ├─ ❏ ${prefix}tomp3
   ├─ ❏ ${prefix}bpink
   ├─ ❏ ${prefix}marvellogo
   ├─ ❏ ${prefix}snowwrite
@@ -25,28 +26,21 @@ const help = (prefix, botname, oname) => {
   ├─ ❏ ${prefix}water
   ├─ ❏ ${prefix}firetext
   └─ ❏ ${prefix}quotemaker
-◪ *MEDIA*
-  │
-  ├─ ❏ ${prefix}trendtwit
-  └─ ❏ ${prefix}ytsearch
-◪ *EDUCATION*
+◪ *PESQUISA*
   │
   ├─ ❏ ${prefix}wiki
   ├─ ❏ ${prefix}wikien
   ├─ ❏ ${prefix}nulis
   └─ ❏ ${prefix}artinama
-◪ *TANYA*
-  │
-  ├─ ❏ ${prefix}apakah
-  ├─ ❏ ${prefix}kapankah
-  └─ ❏ ${prefix}bisakah
 ◪ *DOWNLOADER*
   │
   ├─ ❏ ${prefix}pinterest
   ├─ ❏ ${prefix}ytmp3
   ├─ ❏ ${prefix}ytmp4
   ├─ ❏ ${prefix}joox
-  └─ ❏ ${prefix}joox2
+  ├─ ❏ ${prefix}joox2
+  ├─ ❏ ${prefix}trendtwit
+  └─ ❏ ${prefix}ytsearch
 ◪ *MEME*
   │
   ├─ ❏ ${prefix}meme

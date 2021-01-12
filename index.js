@@ -137,7 +137,7 @@ async function starts() {
 
 			mess = {
 				wait: '⌛ Calmaer opohar to fazendo ⌛',
-				success: '✔️ Berhasil ✔️',
+				success: '✔️ Sucesso ✔️',
 				error: {
 					stick: '[❗] Gagal, terjadi kesalahan saat mengkonversi gambar ke sticker ❌',
 					Iv: '❌ Link tidak valid ❌'
@@ -163,6 +163,8 @@ async function starts() {
 			const groupMetadata = isGroup ? await client.groupMetadata(from) : ''
 			const groupName = isGroup ? groupMetadata.subject : ''
 			const groupId = isGroup ? groupMetadata.jid : ''
+			let { pushname, verifiedName, formattedName } = sender
+			pushname = pushname || verifiedName || formattedName // verifiedName is the name of someone who uses a business account
 			const groupMembers = isGroup ? groupMetadata.participants : ''
 			const groupAdmins = isGroup ? getGroupAdmins(groupMembers) : ''
 			const isBotGroupAdmins = groupAdmins.includes(botNumber) || false
@@ -295,7 +297,7 @@ async function starts() {
 							if (!isNsfw) return reply('❌ *NSFW Desativado* ❌')
 							res = await fetchJson(`https://meme-api.herokuapp.com/gimme/biganimetiddies`, {method: 'get'})
 							buffer = await getBuffer(res.url)
-							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'Ta os peitos de vc queria\npunhetero de merda'})
+							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'Tai os peitos que vc queria\npunhetero de merda'})
 						} catch (e) {
 							console.log(`Error :`, color(e,'red'))
 							reply('❌ *ERROR* ❌')
@@ -366,7 +368,7 @@ async function starts() {
                 break
               case 'owner':
                 case 'creator':
-                  client.sendMessage(from, {displayname: "Jeff", vcard: vcard}, MessageType.contact, { quoted: mek})
+                  client.sendMessage(from, {displayname: "Toin", vcard: vcard}, MessageType.contact, { quoted: mek})
                client.sendMessage(from, 'Nih nomor ownerku kak, save ya kak nanti di save balik',MessageType.text, { quoted: mek} )
                 break
 	case 'hidetag':
@@ -710,7 +712,17 @@ async function starts() {
 						pok = await getBuffer(nimek)
 						client.sendMessage(from, pok, image, { quoted: mek, caption: `Era sapoha q tu qria?\n\*Soq tae* : *${body.slice(11)}*`})
 						break
-					case 'animet':
+				case 'pinterest':
+					client.updatePresence(from, Presence.composing) 
+					data = await fetchJson(`https://api.fdci.se/rep.php?gambar=${body.slice(11)}`, {method: 'get'})
+                                        if (!isUser) return reply(mess.only.daftarB)
+					reply(mess.wait)
+					n = JSON.parse(JSON.stringify(data));
+					nimek =  n[Math.floor(Math.random() * n.length)];
+					pok = await getBuffer(nimek)
+					client.sendMessage(from, pok, image, { quoted: mek, caption: `𝐏𝐈𝐍𝐓𝐄𝐑𝐄𝐒𝐓\n\*Era isso?* : *${body.slice(11)}*`})
+					break
+				case 'animet':
 						client.updatePresence(from, Presence.composing) 
 						data = await fetchJson(`https://arugaz.herokuapp.com/api/kuso?q=${body.slice(11)}`, {method: 'get'})
 											/*if (!isDaftar) return reply(mess.only.daftarB)*/
@@ -778,6 +790,12 @@ async function starts() {
 					client.blockUser (`${body.slice(8)}@c.us`, "add")
 					client.sendMessage(from, `perintah Diterima, memblokir ${body.slice(8)}@c.us`, text)
 					break
+				case 'delete':
+				case 'del':
+						if (!isGroup)return reply(mess.only.group)
+						if (!isGroupAdmins)return reply(mess.only.admin)
+						client.deleteMessage(from, { id: mek.message.extendedTextMessage.contextInfo.stanzaId, remoteJid: from, fromMe: true })
+						break
 				case 'hilih':
 					client.updatePresence(from, Presence.composing) 
 					anu = await fetchJson(`https://mhankbarbars.herokuapp.com/api/hilih?teks=${body.slice(7)}`, {method: 'get'})
@@ -1414,13 +1432,13 @@ async function starts() {
 						if (isWelkom) return reply('fitur sudah aktif')
 						welkom.push(from)
 						fs.writeFileSync('./src/welkom.json', JSON.stringify(welkom))
-						reply('❬ SUCCSESS ❭ mengaktifkan fitur welcome di group ini')
+						reply('*❬ SUCESSO ❭* ativado o recurso de boas-vindas neste grupo')
 					} else if (Number(args[0]) === 0) {
 						welkom.splice(from, disable)
 						fs.writeFileSync('./src/welkom.json', JSON.stringify(welkom))
-						reply('❬ SUCCSESS ❭ menonaktifkan fitur welcome di group ini')
+						reply('*❬ SUCESSO ❭* desativado o recurso de boas-vindas neste grupo')
 					} else {
-						reply('ketik 1 untuk mengaktifkan, 0 untuk menonaktifkan fitur')
+						reply('digite 1 para ativar, 0 para desativar o recurso')
 					}
                                         break
                                 case 'fakta':
