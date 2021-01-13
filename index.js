@@ -637,7 +637,6 @@ async function starts() {
 					})
 					break
 				case 'google':
-            if (!isGroupMsg) return client.reply(from, 'Comando para grupos!', id)
             client.reply(from, mess.wait, id)
             const googleQuery = body.slice(8)
             if(googleQuery == undefined || googleQuery == ' ') return tobz.reply(from, `*Hasil Pencarian : ${googleQuery}* tidak ditemukan`, id)
