@@ -257,7 +257,15 @@ async function starts() {
                                         anu = await fetchJson(`https://tobz-api.herokuapp.com/api/randomloli?apikey=BotWeA`, {method: 'get'})
                                         buffer = await getBuffer(anu.result)
                                         client.sendMessage(from, buffer, image, {quoted: mek})
-                                        break
+										break
+										case 'nsfwloli':
+			        if (!isNsfw) return reply('❌ *NSFW Desativado* ❌')
+					loli.getNSFWLoli(async (err, res) => {
+						if (err) return reply('❄1�7 *ERRO* ❄1�7')
+						buffer = await getBuffer(res.url)
+						client.sendMessage(from, buffer, image, {quoted: mek, caption: 'Jangan jadiin bahan buat comli om'})
+					})
+					break
                   case 'promote':
 					client.updatePresence(from, Presence.composing) 
                                         /*if (!isDaftar) return reply(mess.only.daftarB)*/
@@ -636,22 +644,6 @@ async function starts() {
 						fs.unlinkSync(rano)
 					})
 					break
-				case 'google':
-			client.reply(from, mess.wait, id)
-			if (!isGroup)return reply(mess.only.group)
-            const googleQuery = body.slice(8)
-            if(googleQuery == undefined || googleQuery == ' ') return tobz.reply(from, `*Hasil Pencarian : ${googleQuery}* tidak ditemukan`, id)
-            google({ 'query': googleQuery }).then(results => {
-            let vars = `_*Hasil Pencarian : ${googleQuery}*_\n`
-            for (let i = 0; i < results.length; i++) {
-                vars +=  `\n═════════════════\n\n*Judul* : ${results[i].title}\n\n*Deskripsi* : ${results[i].snippet}\n\n*Link* : ${results[i].link}\n\n`
-            }
-                client.reply(from, vars, id);
-            }).catch(e => {
-                console.log(e)
-                client.sendText(ownerNumber, 'Google Error : ' + e);
-            })
-            break
 				case 'nulis': 
 				case 'tulis': ini
 					if (args.length < 1) return reply('aku suruh nulis apa kak?')
@@ -873,6 +865,12 @@ async function starts() {
 					buffer = await getBuffer(`https://imgur.com/${memein.hash}.jpg`)
 					client.sendMessage(from, buffer, image, {quoted: mek, caption: '.......'})
 					break
+					break
+				case 'memebr':
+					memein = await kagApi.memeindo()
+					buffer = await getBuffer(`https://imgur.com/${memebr.hash}.jpg`)
+					client.sendMessage(from, buffer, image, {quoted: mek, caption: '.......'})
+					break
 				case 'block':
 					client.updatePresence(from, Presence.composing) 
 					if (!isGroup) return reply(mess.only.group)
@@ -1055,30 +1053,30 @@ async function starts() {
 						reply('Suksess broadcast group')
 					}
             break
-				case 'simi':
-					if (args.length < 1) return reply('Textnya mana um?')
-					teks = body.slice(5)
-					anu = await simih(teks) //fetchJson(`https://mhankbarbars.herokuapp.com/api/samisami?text=${teks}`, {method: 'get'})
-					//if (anu.error) return reply('Simi ga tau kak')
-					reply(anu)
-					break
-				case 'simih':
-					if (!isGroup) return reply(mess.only.group)
-					if (!isGroupAdmins) return reply(mess.only.admin)
-					if (args.length < 1) return reply('Hmmmm')
-					if (Number(args[0]) === 1) {
-						if (isSimi) return reply('Mode simi sudah aktif')
-						samih.push(from)
-						fs.writeFileSync('./src/simi.json', JSON.stringify(samih))
-						reply('Sukses mengaktifkan mode simi di group ini ✔️')
-					} else if (Number(args[0]) === 0) {
-						samih.splice(from, 1)
-						fs.writeFileSync('./src/simi.json', JSON.stringify(samih))
-						reply('Sukes menonaktifkan mode simi di group ini ✔️')
-					} else {
-						reply('1 untuk mengaktifkan, 0 untuk menonaktifkan')
-					}
-					break
+			case 'simi':
+				if (args.length < 1) return reply('Textnya mana um?')
+				teks = body.slice(5)
+				anu = await simih(teks) //fetchJson(`https://mhankbarbars.herokuapp.com/api/samisami?text=${teks}`, {method: 'get'})
+				//if (anu.error) return reply('Simi ga tau kak')
+				reply(anu)
+				break
+			case 'simih':
+				if (!isGroup) return reply(mess.only.group)
+				if (!isGroupAdmins) return reply(mess.only.admin)
+				if (args.length < 1) return reply('Hmmmm')
+				if (Number(args[0]) === 1) {
+					if (isSimi) return reply('Simi Ativado')
+					samih.push(from)
+					fs.writeFileSync('./src/simi.json', JSON.stringify(samih))
+					reply('Simi Ativado Neste Grupo ✔️')
+				} else if (Number(args[0]) === 0) {
+					samih.splice(from, 1)
+					fs.writeFileSync('./src/simi.json', JSON.stringify(samih))
+					reply('Simi Desativado Neste Grupo ✔️')
+				} else {
+					reply('1 para ativar, 0 para desativar')
+				}
+				break
 				case 'alay':
                     client.updatePresence(from, Presence.composing) 
                     /*if (!isDaftar) return reply(mess.only.daftarB)*/
@@ -1185,28 +1183,6 @@ async function starts() {
 						reply('Gagal menambahkan target, mungkin karena di private')
 					}
 					break
-				case 'nsfwloli':
-				    try {
-						if (!isNsfw) return reply('❌ *FALSE* ❌')
-						res = await fetchJson(`https://api.lolis.life/random?nsfw=true`, {method: 'get'})
-						buffer = await getBuffer(res.url)
-						client.sendMessage(from, buffer, image, {quoted: mek, caption: 'Jangan jadiin bahan buat comli om'})
-					} catch (e) {
-						console.log(`Error :`, color(e,'red'))
-						reply('❌ *ERROR* ❌')
-					}break
-				case 'nsfwloli':
-				    try {
-						if (!isNsfw) return reply('❌ *FALSE* ❌')
-						res = await fetchJson(`https://api.lolis.life/random?nsfw=true`, {method: 'get'})
-						buffer = await getBuffer(res.url)
-						client.sendMessage(from, buffer, image, {quoted: mek, caption: 'Jangan jadiin bahan buat comli om'})
-					} catch (e) {
-						console.log(`Error :`, color(e,'red'))
-						reply('❌ *ERROR* ❌')
-					}
-					break
-
 				case 'kick':
 					client.updatePresence(from, Presence.composing) 
 					if (!isGroup) return reply(mess.only.group)
