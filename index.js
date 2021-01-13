@@ -1039,22 +1039,6 @@ async function starts() {
 						}
 						reply('Suksess broadcast group')
 					}
-					break
-					case 'google':
-            if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
-            client.reply(from, mess.wait, id)
-            const googleQuery = body.slice(8)
-            if(googleQuery == undefined || googleQuery == ' ') return tobz.reply(from, `*Hasil Pencarian : ${googleQuery}* tidak ditemukan`, id)
-            google({ 'query': googleQuery }).then(results => {
-            let vars = `_*Hasil Pencarian : ${googleQuery}*_\n`
-            for (let i = 0; i < results.length; i++) {
-                vars +=  `\n═════════════════\n\n*Judul* : ${results[i].title}\n\n*Deskripsi* : ${results[i].snippet}\n\n*Link* : ${results[i].link}\n\n`
-            }
-                client.reply(from, vars, id);
-            }).catch(e => {
-                console.log(e)
-                client.sendText(ownerNumber, 'Google Error : ' + e);
-            })
             break
 				case 'simi':
 					if (args.length < 1) return reply('Textnya mana um?')
