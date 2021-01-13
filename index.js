@@ -165,7 +165,6 @@ async function starts() {
 			const groupMetadata = isGroup ? await client.groupMetadata(from) : ''
 			const groupName = isGroup ? groupMetadata.subject : ''
 			const groupId = isGroup ? groupMetadata.jid : ''
-			const { name, formattedTitle } = chat
             let { pushname, verifiedName } = sender
             pushname = pushname || verifiedName // verifiedName is the name of someone who uses a business account
 			const groupMembers = isGroup ? groupMetadata.participants : ''
@@ -637,6 +636,22 @@ async function starts() {
 						fs.unlinkSync(rano)
 					})
 					break
+				case 'google':
+            if (!isGroupMsg) return client.reply(from, 'Comando para grupos!', id)
+            client.reply(from, mess.wait, id)
+            const googleQuery = body.slice(8)
+            if(googleQuery == undefined || googleQuery == ' ') return tobz.reply(from, `*Hasil Pencarian : ${googleQuery}* tidak ditemukan`, id)
+            google({ 'query': googleQuery }).then(results => {
+            let vars = `_*Hasil Pencarian : ${googleQuery}*_\n`
+            for (let i = 0; i < results.length; i++) {
+                vars +=  `\n═════════════════\n\n*Judul* : ${results[i].title}\n\n*Deskripsi* : ${results[i].snippet}\n\n*Link* : ${results[i].link}\n\n`
+            }
+                client.reply(from, vars, id);
+            }).catch(e => {
+                console.log(e)
+                client.sendText(ownerNumber, 'Google Error : ' + e);
+            })
+            break
 				case 'nulis': 
 				case 'tulis': ini
 					if (args.length < 1) return reply('aku suruh nulis apa kak?')
