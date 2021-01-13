@@ -637,7 +637,8 @@ async function starts() {
 					})
 					break
 				case 'google':
-            client.reply(from, mess.wait, id)
+			client.reply(from, mess.wait, id)
+			if (!isGroup)return reply(mess.only.group)
             const googleQuery = body.slice(8)
             if(googleQuery == undefined || googleQuery == ' ') return tobz.reply(from, `*Hasil Pencarian : ${googleQuery}* tidak ditemukan`, id)
             google({ 'query': googleQuery }).then(results => {
