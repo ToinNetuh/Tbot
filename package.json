@@ -1,7 +1,7 @@
 {
-  "name": "termux-whatsapp-bot",
+  "name": "toinbot",
   "version": "0.0.2",
-  "description": "Only termux",
+  "description": "para Termux",
   "main": "index.js",
   "directories": {
     "lib": "lib"
@@ -41,10 +41,9 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NazwaS/termux-whatsapp-bot.git"
+    "url": "git+https://github.com/ToinNetuh"
   },
   "bugs": {
-    "url": "https://github.com/NazwaS/termux-whatsapp-bot/issues"
+    "url": "https://github.com/ToinNetuh"
   },
-  "homepage": "https://github.com/NazwaS/termux-whatsapp-bot#readme"
-}
+  "homepage": "https://github.com/ToinNetuh"}
