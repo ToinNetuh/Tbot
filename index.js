@@ -870,7 +870,13 @@ async function starts() {
 					if (!isGroup) return reply(mess.only.group)
 					if (!isOwner) return reply(mess.only.ownerB)
 					client.blockUser (`${body.slice(8)}@c.us`, "add")
-					client.sendMessage(from, `perintah Diterima, memblokir ${body.slice(8)}@c.us`, text)
+					client.sendMessage(from, `Membro bloqueado ${body.slice(8)}@c.us`, text)
+					break
+				case 'unblock':
+						if (!isGroup) return reply(mess.only.group)
+						if (!isOwner) return reply(mess.only.ownerB)
+						client.blockUser (`${body.slice(9)}@c.us`, "remove")
+						client.sendMessage(from, `Membro desbloqueado ${body.slice(9)}@c.us`, text)
 					break
 				case 'delete':
 				case 'del':
