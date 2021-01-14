@@ -1623,6 +1623,32 @@ async function starts() {
 								await reply(`Error!\n${err}`)
 							})
 					break
+					case 'fitnah':	
+				case 'fake':          
+               if (!isGroup) return reply(mess.only.group)
+                arg = body.substring(body.indexOf(' ') + 1)
+				isi = arg.split(' |')[0] 
+				pesan = arg.split('|')[1] 
+				pesan2 = arg.split('|')[2] 
+                reply(pesan, isi, pesan2)
+                break
+                case 'leveling':
+                if (!isGroup) return reply(mess.only.group)
+                if (!isGroupAdmins) return reply(mess.only.admin)
+                if (args.length < 1) return reply('Ketik 1 untuk mengaktifkan fitur')
+                if (args[0] === '1') {
+                    if (isLevelingOn) return reply('*fitur level sudah aktif sebelum nya*')
+                    _leveling.push(groupId)
+                    fs.writeFileSync('./database/group/leveling.json', JSON.stringify(_leveling))
+                     reply(mess.levelon)
+                } else if (args[0] === '0') {
+                    _leveling.splice(groupId, 1)
+                    fs.writeFileSync('./database/group/leveling.json', JSON.stringify(_leveling))
+                     reply(mess.leveloff)
+                } else {
+                    reply(' *Ketik perintah 1 untuk mengaktifkan, 0 untuk menonaktifkan* \n *Contoh: ${prefix}leveling 1*')
+                }
+            break
 					case 'ping':
 							await client.sendMessage(from, `Pong!!!\nSpeed: ${processTime(time, moment())} _Second_`)
 							break
