@@ -12,17 +12,17 @@ const {
     Mimetype,
     GroupSettingChange
 } = require('@adiwajshing/baileys')
+/******BEGIN OF FILE INPUT******/
 const { color, bgcolor } = require('./lib/color')
-const { help } = require('./src/help')
 const { bahasa } = require('./src/bahasa')
-const { toinmenu } = require('./src/toinmenu')
-const { menuadmin } = require('./src/menuadmin')
-const { nsfwmenu } = require('./src/nsfwmenu')
 const { negara } = require('./src/kodenegara')
 const { virtex } = require('./src/virtex')
 const { wait, simih, getBuffer, h2k, generateMessageID, getGroupAdmins, getRandom, banner, start, info, success, close } = require('./lib/functions')
 const { fetchJson } = require('./lib/fetcher')
 const { recognize } = require('./lib/ocr')
+/******END OF FILE INPUT******/
+
+/******BEGIN OF NPM PACKAGE INPUT******/
 const fs = require('fs')
 const moment = require('moment-timezone')
 const { exec } = require('child_process')
@@ -34,10 +34,41 @@ const { removeBackgroundFromImageFile } = require('remove.bg')
 const imgbb = require('imgbb-uploader')
 const lolis = require('lolis.life')
 const loli = new lolis()
+const speed = require('performance-now')
+/******END OF NPM PACKAGE INPUT******/
+
+/******BEGIN OF JSON INPUT******/
 const welkom = JSON.parse(fs.readFileSync('./src/welkom.json'))
 const nsfw = JSON.parse(fs.readFileSync('./src/nsfw.json'))
 const samih = JSON.parse(fs.readFileSync('./src/simi.json'))
-const speed = require('performance-now')
+const user = JSON.parse(fs.readFileSync('./src/user.json'))
+const _leveling = JSON.parse(fs.readFileSync('./src/leveling.json'))
+const _level = JSON.parse(fs.readFileSync('./src/level.json'))
+/******END OF JSON INPUT******/
+
+/******LOAD OF MENU INPUT******/
+const { help } = require('./src/help')
+const { toinmenu } = require('./src/toinmenu')
+const { menuadmin } = require('./src/menuadmin')
+const { nsfwmenu } = require('./src/nsfwmenu')
+//const { makermenu } = require('./database/menu/makermenu')
+//const { mediamenu } = require('./database/menu/mediamenu')
+//const { educationmenu } = require('./database/menu/educationmenu')
+//const { downloadermenu } = require('./database/menu/downloadermenu')
+//const { mememenu } = require('./database/menu/mememenu')
+//const { kerangmenu } = require('./database/menu/kerangmenu')
+//const { groupmenu } = require('./database/menu/groupmenu')
+//const { soundmenu } = require('./database/menu/soundmenu')
+//const { musicmenu } = require('./database/menu/musicmenu')
+//const { islammenu } = require('./database/menu/islammenu')
+//const { stalkmenu } = require('./database/menu/stalkmenu')
+//const { wibumenu } = require('./database/menu/wibumenu')
+//const { funmenu } = require('./database/menu/funmenu')
+//const { informationmenu } = require('./database/menu/informationmenu')
+//const { 18+menu } require('./database/menu/18+menu')
+//const { ownermenu } require('./database/menu/ownermenu')
+//const { othermenu } require('./database/menu/othermenu')
+/******END OF MENU INPUT******/
 //const daftar = JSON.parse(fs.readFileSync('./src/daftar.json'))
 const vcard = 'BEGIN:VCARD\n' // metadata of the contact card
             + 'VERSION:3.0\n' 
@@ -47,6 +78,75 @@ const vcard = 'BEGIN:VCARD\n' // metadata of the contact card
             + 'END:VCARD'
 prefix = '*'
 blocked = []
+
+/******BEGIN OF FUNCTIONS INPUT******/
+const getLevelingXp = (userId) => {
+	let position = false
+	Object.keys(_level).forEach((i) => {
+		if (_level[i].jid === userId) {
+			position = i
+		}
+	})
+	if (position !== false) {
+		return _level[position].xp
+	}
+}
+
+const getLevelingLevel = (userId) => {
+	let position = false
+	Object.keys(_level).forEach((i) => {
+		if (_level[i].jid === userId) {
+			position = i
+		}
+	})
+	if (position !== false) {
+		return _level[position].level
+	}
+}
+
+const getLevelingId = (userId) => {
+	let position = false
+	Object.keys(_level).forEach((i) => {
+		if (_level[i].jid === userId) {
+			position = i
+		}
+	})
+	if (position !== false) {
+		return _level[position].jid
+	}
+}
+
+const addLevelingXp = (userId, amount) => {
+	let position = false
+	Object.keys(_level).forEach((i) => {
+		if (_level[i].jid === userId) {
+			position = i
+		}
+	})
+	if (position !== false) {
+		_level[position].xp += amount
+		fs.writeFileSync('./src/level.json', JSON.stringify(_level))
+	}
+}
+
+const addLevelingLevel = (userId, amount) => {
+	let position = false
+	Object.keys(_level).forEach((i) => {
+		if (_level[i].jid === userId) {
+			position = i
+		}
+	})
+	if (position !== false) {
+		_level[position].level += amount
+		fs.writeFileSync('./src/level.json', JSON.stringify(_level))
+	}
+}
+
+const addLevelingId = (userId) => {
+	const obj = {jid: userId, xp: 1, level: 1}
+	_level.push(obj)
+	fs.writeFileSync('./src/level.json', JSON.stringify(_level))
+}
 
 function kyun(seconds){
   function pad(s){
@@ -140,6 +240,10 @@ async function starts() {
 			mess = {
 				wait: '⌛ Calmaer opohar to fazendo ⌛',
 				success: '✔️ Sucesso ✔️',
+				levelon: '❬ ✔ ❭ *Ativado leveling*',
+				leveloff: ' ❬ X ❭  *Desativado leveling*',
+				levelnoton: '❬ X ❭ *Leveling naum ativado*',
+				levelnol: '*Kskskst opohar Level* 0 ',
 				error: {
 					stick: '[❗] Falha, ocorreu um erro ao converter a imagem em um adesivo ❌',
 					Iv: '❌ Link inválido ❌'
@@ -175,6 +279,8 @@ async function starts() {
 			const isNsfw = isGroup ? nsfw.includes(from) : false
 			const isSimi = isGroup ? samih.includes(from) : false
 			const isOwner = ownerNumber.includes(sender)
+			const isLevelingOn = isGroup ? _leveling.includes(groupId) : false
+			const NomerOwner = '556296638900@s.whatsapp.net'
                         //const isDaftar = daftar.includes(sender)
 
 			const isUrl = (url) => {
@@ -190,6 +296,25 @@ async function starts() {
 				(id == null || id == undefined || id == false) ? client.sendMessage(from, teks.trim(), extendedText, {contextInfo: {"mentionedJid": memberr}}) : client.sendMessage(from, teks.trim(), extendedText, {quoted: mek, contextInfo: {"mentionedJid": memberr}})
 			}
 
+			 //function leveling
+			 if (isGroup && isLevelingOn) {
+				const currentLevel = getLevelingLevel(sender)
+				const checkId = getLevelingId(sender)
+				try {
+					if (currentLevel === undefined && checkId === undefined) addLevelingId(sender)
+					const amountXp = Math.floor(Math.random() * 10) + 500
+					const requiredXp = 5000 * (Math.pow(2, currentLevel) - 1)
+					const getLevel = getLevelingLevel(sender)
+					addLevelingXp(sender, amountXp)
+					if (requiredXp <= getLevelingXp(sender)) {
+						addLevelingLevel(sender, 1)
+						await reply(`*「 LEVEL UP 」*\n\n➸ *Name*: ${sender}\n➸ *XP*: ${getLevelingXp(sender)}\n➸ *Level*: ${getLevel} -> ${getLevelingLevel(sender)}\n\nCongrats!! 🎉🎉`)
+					}
+				} catch (err) {
+					console.error(err)
+				}
+			}
+
 			colors = ['red','white','black','blue','yellow','green']
 			const isMedia = (type === 'imageMessage' || type === 'videoMessage')
 			const isQuotedImage = type === 'extendedTextMessage' && content.includes('imageMessage')
@@ -199,6 +324,8 @@ async function starts() {
 			if (!isGroup && !isCmd) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;31mRECV\x1b[1;37m]', time, color('Message'), 'from', color(sender.split('@')[0]), 'args :', color(args.length))
 			if (isCmd && isGroup) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(command), 'from', color(sender.split('@')[0]), 'in', color(groupName), 'args :', color(args.length))
 			if (!isCmd && isGroup) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;31mRECV\x1b[1;37m]', time, color('Message'), 'from', color(sender.split('@')[0]), 'in', color(groupName), 'args :', color(args.length))
+			
+			 /******END OF FUNCTIONS INPUT******/
 			switch(command) {
 				case 'help':
 				case 'menu':
@@ -308,7 +435,7 @@ async function starts() {
 							reply('❌ *ERROR* ❌')
 						}
 						break
-					case 'nsfwbobs':
+					case 'nsfwbobs': 
 						try {
 							if (!isNsfw) return reply('❌ *NSFW Desativado* ❌')
 							res = await fetchJson(`https://meme-api.herokuapp.com/gimme/biganimetiddies`, {method: 'get'})
@@ -341,7 +468,7 @@ async function starts() {
 							reply('❌ *ERROR* ❌')
 						}
 						break
-					case 'nsfwtrap':
+					case 'trap':
 						try {
 							if (!isNsfw) return reply('❌ *NSFW Desativado* ❌')
 							res = await fetchJson(`https://api.computerfreaker.cf/v1/trap`, {method: 'get'})
@@ -417,7 +544,18 @@ async function starts() {
 							console.log(`Error :`, color(e,'red'))
 							reply('❌ *ERROR* ❌')
 						}
-					    break
+						break
+						case 'nsfwtrap':
+						try {
+							if (!isNsfw) return reply('❌ *NSFW Desativado* ❌')
+							res = await fetchJson(`https://tobz-api.herokuapp.com/nsfwtrap?apikey=BotWeA`, {method: 'get'})
+							buffer = await getBuffer(res.url)
+							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'Tai os peitos que vc queria\npunhetero de merda'})
+						} catch (e) {
+							console.log(`Error :`, color(e,'red'))
+							reply('❌ *ERROR* ❌')
+						}
+						break
 				  case 'wa.me':
 				  case 'wame':
   client.updatePresence(from, Presence.composing) 
@@ -872,12 +1010,6 @@ async function starts() {
 					client.blockUser (`${body.slice(8)}@c.us`, "add")
 					client.sendMessage(from, `Membro bloqueado ${body.slice(8)}@c.us`, text)
 					break
-				case 'unblock':
-						if (!isGroup) return reply(mess.only.group)
-						if (!isOwner) return reply(mess.only.ownerB)
-						client.blockUser (`${body.slice(9)}@c.us`, "remove")
-						client.sendMessage(from, `Membro desbloqueado ${body.slice(9)}@c.us`, text)
-					break
 				case 'delete':
 				case 'del':
 						if (!isGroup)return reply(mess.only.group)
@@ -1032,7 +1164,7 @@ async function starts() {
 						for (let _ of anu) {
 							sendMess(_.jid, `*「 BROADCAST 」*\n\n${body.slice(4)}`)
 						}
-						reply('Suksess broadcast')
+						reply('Sucesso Enviado Para Todos')
 					}
 					break
 					case 'bcgc':
@@ -1478,6 +1610,66 @@ async function starts() {
 					client.sendMessage(from, anu.result.soal, text, { quoted: mek }) // ur cods
 					}, 0) // 1000 = 1s,
 					break
+					case 'level':
+						if (!isLevelingOn) return reply(mess.levelnoton)
+						if (!isGroup) return reply(mess.only.group)
+						const userLevel = getLevelingLevel(sender)
+						const userXp = getLevelingXp(sender)
+						if (userLevel === undefined && userXp === undefined) return reply(mess.levelnol)
+						sem = sender.replace('@s.whatsapp.net','')
+						resul = `◪ *LEVEL*\n  ├─ ❏ *Nome* : ${sem}\n  ├─ ❏ *XP do usuario* : ${userXp}\n  └─ ❏ *Level do usuario* : ${userLevel}`
+					   client.sendMessage(from, resul, text, { quoted: mek})
+						.catch(async (err) => {
+								console.error(err)
+								await reply(`Error!\n${err}`)
+							})
+					break
+					case 'ping':
+							await client.sendMessage(from, `Pong!!!\nSpeed: ${processTime(time, moment())} _Second_`)
+							break
+					case 'neonlogo':
+							var gh = body.slice(9)
+							var teks1 = gh.split("|")[0];
+							if (args.length < 1) return reply('teksnya mana um\nContoh: ${prefix}neonlogo NazwaCanss')
+							reply(mess.wait)
+							anu = await fetchJson(`https://tobz-api.herokuapp.com/api/textpro?theme=neon_light&text=${teks1}&apikey=BotWeA`, {method: 'get'})
+							buffer = await getBuffer(anu.result)
+							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'Nih kak logonya...'})
+							break
+					case 'neonlogo2':
+							var gh = body.slice(9)
+							teks1 = gh.split("|")[0];
+							if (args.length < 1) return reply('teksnya mana um\nContoh: ${prefix}neonlogo2 NazwaCanss')
+							reply(mess.wait)
+							anu = await fetchJson(`https://tobz-api.herokuapp.com/api/textpro?theme=neon_technology&text=${text1}&apikey=BotWeA`, {method: 'get'})
+							buffer = await getBuffer(anu.result)
+							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'Nih kak logonya...'})
+							break
+					case 'lionlogo':
+							var gh = body.slice(11)
+							var teks1 = gh.split("|")[0];
+							var teks2 = gh.split("|")[1];
+							if (args.length < 1) return reply('teksnya mana um\nContoh: ${prefix}lionlogo Nazwa|Canss')
+							reply(mess.wait)
+							anu = await fetchJson(`https://tobz-api.herokuapp.com/api/textpro?theme=lionlogo&text1=${text1}&text2=${teks2}&apikey=BotWeA`, {method: 'get'})
+							buffer = await getBuffer(anu.result)
+							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'Nih kak logonya...'})
+							break
+					/*case 'jsholat':
+							tels = body.slice(8)
+							if (args.length < 1) return reply('Daerahnya dimana kak?')
+							anu = await fetchJson(`https://tobz-api.herokuapp.com/api/jadwalshalat?q=${tels}&apikey=BotWeA`, {method: 'get'})
+							reply(anu.result)
+							break*/
+					case 'jokerlogo':
+							var gh = body.slice(11)
+							var teks1 = gh.split("|")[0];
+							if (args.length < 1) return reply('teksnya mana um\nContoh: ${prefix}jokerlogo NazwaCanss')
+							reply(mess.wait)
+							anu = await fetchJson(`https://tobz-api.herokuapp.com/api/textpro?theme=jokerlogo&text=${teks1}&apikey=BotWeA`, {method: 'get'})
+							buffer = await getBuffer(anu.result)
+							client.sendMessage(from, buffer, image, {quoted: mek, caption: 'Nih kak logonya...'})
+							break
                                 /*case 'daftar':
 					client.updatePresence(from, Presence.composing)
 					if (isDaftar) return reply('kamu sudah terdaftar')
